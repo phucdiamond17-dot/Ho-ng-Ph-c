@@ -17,22 +17,19 @@ body{
 .header{
   background:linear-gradient(to right,#0d2b4d,#1f4f7a);
   padding:15px;
-  font-size:22px;
+  font-size:20px;
   font-weight:bold;
 }
 
 /* BUTTON */
-.buttons{
-  margin:15px;
-}
 .btn{
   padding:15px;
-  margin:8px;
-  font-size:16px;
+  margin:10px;
   border:none;
   border-radius:12px;
   width:100px;
   color:#fff;
+  font-size:16px;
 }
 .b{background:#1976D2}
 .p{background:#D32F2F}
@@ -53,11 +50,6 @@ body{
   border-radius:20px;
 }
 
-/* TEXT */
-.percent{
-  margin-top:5px;
-}
-
 /* BOX */
 .box{
   background:#10263f;
@@ -66,7 +58,7 @@ body{
   border-radius:12px;
 }
 
-/* GRID (bảng cầu) */
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns: repeat(12, 22px);
@@ -98,10 +90,10 @@ body{
 
 /* RESET */
 .reset{
-  margin-top:15px;
-  padding:10px 25px;
+  margin:15px;
+  padding:10px 20px;
   border:none;
-  border-radius:8px;
+  border-radius:10px;
 }
 </style>
 </head>
@@ -110,14 +102,14 @@ body{
 
 <div class="header">🔥 TOOL GPT Baccarat VIP</div>
 
-<div class="buttons">
+<div>
   <button class="btn b" onclick="add('B')">BANKER</button>
   <button class="btn t" onclick="add('T')">TIE</button>
   <button class="btn p" onclick="add('P')">PLAYER</button>
 </div>
 
 <div class="bar"><div id="bar" class="fill"></div></div>
-<div id="percent" class="percent">P 50% - B 50%</div>
+<div id="percent">P 50% - B 50%</div>
 
 <div class="box">
   <div id="suggest">👉 Đang phân tích...</div>
@@ -137,7 +129,7 @@ function save(){
 
 function add(x){
   data.push(x);
-  if(data.length>100)data.shift();
+  if(data.length>120)data.shift();
   save();
   render();
 }
@@ -161,7 +153,7 @@ function analyze(){
   let pb=Math.round((p/total)*100);
   let bb=100-pb;
 
-  /* 🔥 streak */
+  /* 🔥 tính chuỗi */
   let streak=1;
   for(let i=data.length-1;i>0;i--){
     if(data[i]==data[i-1]) streak++;
@@ -171,18 +163,23 @@ function analyze(){
   let suggest="BỎ";
   let warn="";
 
-  /* cảnh báo cầu gãy */
+  /* 🔥 cảnh báo cầu */
   if(streak>=4){
     warn="⚠️ Cầu bệt " + streak + " → dễ gãy!";
   }
 
-  /* AI logic */
+  /* 🔥 AI quyết định */
   if(pb>65){
     suggest="🔥 NÊN PLAYER";
-  }else if(bb>65){
+  }
+  else if(bb>65){
     suggest="🔥 NÊN BANKER";
-  }else if(streak>=3){
+  }
+  else if(streak>=3){
     suggest="⚡ Theo cầu: " + data[data.length-1];
+  }
+  else{
+    suggest="⏳ CHỜ THÊM";
   }
 
   return [pb,bb,suggest,warn];
